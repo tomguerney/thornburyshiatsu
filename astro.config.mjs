@@ -7,7 +7,6 @@ export default defineConfig({
   experimental: {
     viewTransitions: true,
   },
-  site: 'https://tomguerney.github.io',
-  base: '/thornburyshiatsu',
+  site: 'https://thornburyshiatsu.com.au',
   integrations: [tailwind(), compress()],
 });
