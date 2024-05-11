@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Bookings from '../components/home/Bookings.astro';
+import Services from '../components/home/Services.astro';
+---
+
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+
+<script>
+  Calendly.initInlineWidget({
+    url: 'https://calendly.com/meegs-graham',
+    parentElement: document.getElementById('calendly-embed'),
+  });
+</script>
+
+<Layout description="Book a treatment." title="Bookings">
+  <Bookings />
+</Layout>
