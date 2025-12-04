@@ -1,0 +1,42 @@
+---
+// Component: Lists blog posts found under src/pages/posts
+const modules = import.meta.glob('../../pages/posts/*.md', { eager: true });
+
+/** @type {Array<{title?:string,pubDate?:string,description?:string,url:string}>>} */
+const posts = Object.entries(modules).map(([path, mod]) => {
+  const m = /** @type {any} */ (mod);
+  const fm = m?.frontmatter || {};
+  const fileName = String((path.split('/').pop() || '')).replace(/\.md$/, '');
+  return {
+    title: fm.title || fileName,
+    pubDate: fm.pubDate || fm.date || null,
+    description: fm.description || fm.excerpt || '',
+    url: `/posts/${fileName}`,
+  };
+}).sort((a, b) => {
+  if (!a.pubDate) return 1;
+  if (!b.pubDate) return -1;
+  return new Date(String(b.pubDate)).getTime() - new Date(String(a.pubDate)).getTime();
+});
+---
+
+<section class="py-16 sm:py-20">
+  <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-4xl lg:px-8">
+    <div class="flex flex-col gap-8">
+      <div class="flex flex-col gap-4">
+        <h1 class="text-4xl font-medium tracking-tight text-primary-900 dark:text-primary-100 sm:text-5xl">Living in Alignment</h1>
+        <p class="text-lg text-primary-950/70 dark:text-primary-200/70 sm:text-xl">Insights from East Asian Medicine</p>
+      </div>
+
+      <ul class="mt-8 space-y-6">
+        {posts.map((post) => (
+          <li class="rounded-2xl bg-primary-500/10 dark:bg-primary-400/10 p-6 transition hover:bg-primary-500/20 dark:hover:bg-primary-400/20">
+            <a href={post.url} class="text-2xl font-semibold text-primary-700 dark:text-primary-300 hover:underline">{post.title}</a>
+            {post.pubDate && <p class="mt-2 text-primary-900/70 dark:text-primary-200/70">{post.pubDate}</p>}
+            {post.description && <p class="mt-2 text-primary-900/70 dark:text-primary-200/70">{post.description}</p>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
