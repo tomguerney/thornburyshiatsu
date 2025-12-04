@@ -7,9 +7,25 @@ const posts = Object.entries(modules).map(([path, mod]) => {
   const m = /** @type {any} */ (mod);
   const fm = m?.frontmatter || {};
   const fileName = String((path.split('/').pop() || '')).replace(/\.md$/, '');
+  const rawDate = fm.pubDate || fm.date || null;
+  let formattedDate = '';
+  if (rawDate) {
+    try {
+      const d = new Date(rawDate);
+      if (!Number.isNaN(d.getTime())) {
+        formattedDate = d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+      } else {
+        formattedDate = String(rawDate);
+      }
+    } catch (e) {
+      formattedDate = String(rawDate);
+    }
+  }
+
   return {
     title: fm.title || fileName,
-    pubDate: fm.pubDate || fm.date || null,
+    pubDate: rawDate,
+    formattedDate,
     description: fm.description || fm.excerpt || '',
     url: `/posts/${fileName}`,
   };
@@ -31,9 +47,15 @@ const posts = Object.entries(modules).map(([path, mod]) => {
       <ul class="mt-8 space-y-6">
         {posts.map((post) => (
           <li class="rounded-2xl bg-primary-500/10 dark:bg-primary-400/10 p-6 transition hover:bg-primary-500/20 dark:hover:bg-primary-400/20">
-            <a href={post.url} class="text-2xl font-semibold text-primary-700 dark:text-primary-300 hover:underline">{post.title}</a>
-            {post.pubDate && <p class="mt-2 text-primary-900/70 dark:text-primary-200/70">{post.pubDate}</p>}
-            {post.description && <p class="mt-2 text-primary-900/70 dark:text-primary-200/70">{post.description}</p>}
+            <header class="flex flex-col">
+              <h3 class="text-2xl font-semibold text-primary-700 dark:text-primary-300">
+                <a href={post.url} class="hover:underline">{post.title}</a>
+              </h3>
+              {post.formattedDate && (
+                <time datetime={post.pubDate} class="text-sm text-primary-600 dark:text-primary-400 font-medium uppercase tracking-wider opacity-90 mt-2">{post.formattedDate}</time>
+              )}
+            </header>
+            {post.description && <p class="mt-4 text-primary-900/70 dark:text-primary-200/70">{post.description}</p>}
           </li>
         ))}
       </ul>

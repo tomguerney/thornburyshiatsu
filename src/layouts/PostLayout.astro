@@ -30,7 +30,9 @@ if (postPubDate) {
       <div class="mx-auto max-w-2xl">
         <header class="mb-8">
           {postTitle && <h1 class="text-4xl font-medium tracking-tight text-primary-900 dark:text-primary-100 sm:text-5xl mb-2">{postTitle}</h1>}
-          {formattedDate && <p class="text-primary-700 dark:text-primary-300 text-base">{formattedDate}</p>}
+          {formattedDate && (
+            <time datetime={postPubDate} class="inline-block text-sm text-primary-600 dark:text-primary-400 font-medium uppercase tracking-wider opacity-90 mb-2">{formattedDate}</time>
+          )}
         </header>
 
         <article class="prose prose-lg prose-primary dark:prose-invert max-w-none post-content leading-relaxed">
