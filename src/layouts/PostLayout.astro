@@ -1,30 +1,35 @@
 ---
 import Layout from './Layout.astro';
 
+// Read frontmatter from top-level props or from `frontmatter` object if present (some MD renderers)
 const { title, pubDate, description } = Astro.props;
+const fm = /** @type {any} */ (Astro.props && Astro.props.frontmatter ? Astro.props.frontmatter : {});
+const postTitle = title || fm.title || '';
+const postPubDate = pubDate || fm.pubDate || fm.date || '';
+const postDescription = description || fm.description || '';
 
 // Format the publication date for display (fallback to raw string if invalid)
 let formattedDate = '';
-if (pubDate) {
+if (postPubDate) {
   try {
-    const d = new Date(pubDate);
+    const d = new Date(postPubDate);
     if (!Number.isNaN(d.getTime())) {
       formattedDate = d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
     } else {
-      formattedDate = String(pubDate);
+      formattedDate = String(postPubDate);
     }
   } catch (e) {
-    formattedDate = String(pubDate);
+    formattedDate = String(postPubDate);
   }
 }
 ---
 
-<Layout title={title || 'Post'} description={description || ''}>
+<Layout title={postTitle || 'Post'} description={postDescription || ''}>
   <section class="py-16 sm:py-20">
     <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <div class="mx-auto max-w-2xl">
         <header class="mb-8">
-          {title && <h1 class="text-4xl font-medium tracking-tight text-primary-900 dark:text-primary-100 sm:text-5xl mb-2">{title}</h1>}
+          {postTitle && <h1 class="text-4xl font-medium tracking-tight text-primary-900 dark:text-primary-100 sm:text-5xl mb-2">{postTitle}</h1>}
           {formattedDate && <p class="text-primary-700 dark:text-primary-300 text-base">{formattedDate}</p>}
         </header>
 
