@@ -27,6 +27,6 @@ To maintain this delicate balance:
 - Rhythm: Rise to meet the sun. Seek repose during midday heat; find shelter or refresh your feet in cool water.
 - Spirit: Intentionally make space for celebration and heartfelt laughter. Crucially, balance this external activity with moments of profound stillness.
 
-The deep, calming touch of Shiatsu provides a balanced exchange of energies—the cool hand that ensures your fire is contained, allowing it to warm and energise rather than overpower.
+The deep, calming touch of Shiatsu provides a balanced exchange of energies — a steady hand that ensures your fire is contained, allowing it to warm and energise rather than overpower.
 
 May your summer be both vibrant and deeply harmonious. I wish you a heart that is wide open yet always wise, and a fire that burns with bright, enduring power.
